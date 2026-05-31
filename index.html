@@ -9,22 +9,14 @@
   tailwind.config = {
     theme: {
       extend: {
-        fontFamily: {
-          sans: ['Inter', 'system-ui', 'sans-serif'],
-        },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
         animation: {
           'fade-in': 'fadeIn 0.2s ease-out',
           'scale-in': 'scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
         },
         keyframes: {
-          fadeIn: {
-            '0%': { opacity: '0' },
-            '100%': { opacity: '1' },
-          },
-          scaleIn: {
-            '0%': { opacity: '0', transform: 'scale(0.95) translateY(10px)' },
-            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
-          },
+          fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+          scaleIn: { '0%': { opacity: '0', transform: 'scale(0.95) translateY(10px)' }, '100%': { opacity: '1', transform: 'scale(1) translateY(0)' } },
         },
       },
     },
@@ -55,9 +47,35 @@
         </div>
         <span class="font-bold text-lg tracking-tight">Practical Things</span>
       </div>
-      <button class="px-5 py-2 rounded-lg bg-white text-slate-950 font-semibold text-sm hover:bg-slate-200 transition-colors shadow-lg shadow-white/10">
+
+      <!-- Logged-out -->
+      <button id="navSignInBtn" onclick="openAuthModal('signin')"
+        class="px-5 py-2 rounded-lg bg-white text-slate-950 font-semibold text-sm hover:bg-slate-200 transition-colors shadow-lg shadow-white/10">
         Sign In
       </button>
+
+      <!-- Logged-in (hidden by default) -->
+      <div id="navUserMenu" class="hidden items-center gap-3">
+        <div class="relative">
+          <button id="avatarBtn" onclick="toggleUserDropdown()"
+            class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-white/5 transition-colors">
+            <div id="avatarCircle" class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-slate-950 font-bold text-xs"></div>
+            <span id="navUsername" class="text-sm font-medium text-slate-300"></span>
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="userDropdown" class="hidden absolute right-0 mt-1 w-44 bg-slate-900 border border-white/10 rounded-xl shadow-xl overflow-hidden">
+            <div class="px-4 py-3 border-b border-white/5">
+              <p id="dropdownEmail" class="text-xs text-slate-400 truncate"></p>
+            </div>
+            <button onclick="signOut()"
+              class="w-full text-left px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 hover:text-white transition-colors">
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 
@@ -80,7 +98,7 @@
   <section class="max-w-7xl mx-auto px-6 pb-24">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      <!-- Card 1: FREE -->
+      <!-- Spanish Learning -->
       <div class="group relative bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-emerald-500/30 hover:bg-slate-900/80 transition-all duration-300">
         <div class="flex items-start justify-between mb-5">
           <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
@@ -90,31 +108,50 @@
           </div>
           <span class="px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-300 text-xs font-bold tracking-wider">FREE</span>
         </div>
-        <h3 class="text-xl font-bold mb-2">Spanish Learning / Verb app</h3>
+        <h3 class="text-xl font-bold mb-2">Spanish Learning</h3>
         <p class="text-sm text-slate-400 mb-6 leading-relaxed">Master Spanish verbs with quick, focused practice sessions. Build fluency one conjugation at a time.</p>
-        <a href="https://spanish.practical-things.eu" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-colors">
+        <a href="https://spanish.practical-things.eu" target="_blank" rel="noopener noreferrer"
+          class="block w-full text-center py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-colors">
           Open App
         </a>
       </div>
 
-      <!-- Card 2: FREE -->
+      <!-- Norwegian Learning -->
       <div class="group relative bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-emerald-500/30 hover:bg-slate-900/80 transition-all duration-300">
         <div class="flex items-start justify-between mb-5">
           <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
             <svg class="w-6 h-6 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+          </div>
+          <span class="px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-300 text-xs font-bold tracking-wider">FREE</span>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Norwegian Learning</h3>
+        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Survival vocabulary, sentence builder, and spaced-repetition flashcards. Sign in to sync your progress.</p>
+        <a href="https://norwegian.practical-things.eu" target="_blank" rel="noopener noreferrer"
+          class="block w-full text-center py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-colors">
+          Open App
+        </a>
+      </div>
+
+      <!-- Quick Notes -->
+      <div class="group relative bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-emerald-500/30 hover:bg-slate-900/80 transition-all duration-300">
+        <div class="flex items-start justify-between mb-5">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+            <svg class="w-6 h-6 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
           </div>
           <span class="px-2.5 py-1 rounded-md bg-emerald-500/15 text-emerald-300 text-xs font-bold tracking-wider">FREE</span>
         </div>
         <h3 class="text-xl font-bold mb-2">Quick Notes</h3>
         <p class="text-sm text-slate-400 mb-6 leading-relaxed">Capture thoughts instantly. Markdown support, autosave, and zero learning curve.</p>
-        <button class="w-full py-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-colors">
-          Open App
+        <button class="w-full py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm font-semibold opacity-50 cursor-not-allowed">
+          Coming Soon
         </button>
       </div>
 
-      <!-- Card 3: PRO -->
+      <!-- Habit Tracker -->
       <div class="group relative bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-purple-500/30 hover:bg-slate-900/80 transition-all duration-300">
         <div class="flex items-start justify-between mb-5">
           <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
@@ -126,12 +163,13 @@
         </div>
         <h3 class="text-xl font-bold mb-2">Habit Tracker</h3>
         <p class="text-sm text-slate-400 mb-6 leading-relaxed">Build streaks that stick. Advanced analytics, reminders, and unlimited habits.</p>
-        <button onclick="openUpgradeModal()" class="w-full py-2.5 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-sm font-semibold transition-colors shadow-lg shadow-purple-500/20">
+        <button onclick="openUpgradeModal()"
+          class="w-full py-2.5 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-sm font-semibold transition-colors shadow-lg shadow-purple-500/20">
           Upgrade
         </button>
       </div>
 
-      <!-- Card 4: PRO -->
+      <!-- Budget Planner -->
       <div class="group relative bg-slate-900/50 border border-white/5 rounded-2xl p-6 hover:border-purple-500/30 hover:bg-slate-900/80 transition-all duration-300">
         <div class="flex items-start justify-between mb-5">
           <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
@@ -143,7 +181,8 @@
         </div>
         <h3 class="text-xl font-bold mb-2">Budget Planner</h3>
         <p class="text-sm text-slate-400 mb-6 leading-relaxed">Take control of your finances. Multi-currency, smart categories, and exportable reports.</p>
-        <button onclick="openUpgradeModal()" class="w-full py-2.5 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-sm font-semibold transition-colors shadow-lg shadow-purple-500/20">
+        <button onclick="openUpgradeModal()"
+          class="w-full py-2.5 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-sm font-semibold transition-colors shadow-lg shadow-purple-500/20">
           Upgrade
         </button>
       </div>
@@ -172,92 +211,98 @@
     </div>
   </footer>
 
-  <!-- Upgrade Modal -->
-  <div id="upgradeModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4">
-    <!-- Backdrop -->
-    <div onclick="closeUpgradeModal()" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm animate-fade-in"></div>
-
-    <!-- Modal Content -->
-    <div class="relative bg-slate-900 border border-white/10 rounded-2xl shadow-2xl shadow-purple-500/10 max-w-md w-full p-8 animate-scale-in">
-      <!-- Close X -->
-      <button onclick="closeUpgradeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-colors" aria-label="Close">
+  <!-- Auth Modal -->
+  <div id="authModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4">
+    <div onclick="closeAuthModal()" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm animate-fade-in"></div>
+    <div class="relative bg-slate-900 border border-white/10 rounded-2xl shadow-2xl shadow-black/40 max-w-sm w-full p-8 animate-scale-in">
+      <button onclick="closeAuthModal()"
+        class="absolute top-4 right-4 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
+      <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center mb-5">
+        <svg class="w-5 h-5 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <div class="flex gap-1 p-1 bg-white/5 rounded-lg mb-6">
+        <button id="tabSignin" onclick="switchTab('signin')"
+          class="flex-1 py-1.5 rounded-md text-sm font-semibold transition-colors bg-white text-slate-950">Sign In</button>
+        <button id="tabSignup" onclick="switchTab('signup')"
+          class="flex-1 py-1.5 rounded-md text-sm font-semibold transition-colors text-slate-400 hover:text-white">Sign Up</button>
+      </div>
+      <div id="authError" class="hidden mb-4 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm"></div>
+      <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div id="fieldName" class="hidden">
+          <label class="block text-xs font-medium text-slate-400 mb-1.5">Name</label>
+          <input type="text" id="inputName" placeholder="Your name"
+            class="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-colors" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-1.5">Email</label>
+          <input type="email" id="inputEmail" placeholder="you@example.com" required
+            class="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-colors" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-1.5">Password</label>
+          <input type="password" id="inputPassword" placeholder="••••••••" required minlength="8"
+            class="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-colors" />
+        </div>
+        <div id="fieldPasswordConfirm" class="hidden">
+          <label class="block text-xs font-medium text-slate-400 mb-1.5">Confirm Password</label>
+          <input type="password" id="inputPasswordConfirm" placeholder="••••••••" minlength="8"
+            class="w-full px-3.5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/20 transition-colors" />
+        </div>
+        <button type="submit" id="authSubmitBtn"
+          class="w-full py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-sm transition-colors shadow-lg shadow-emerald-500/20">
+          Sign In
+        </button>
+      </form>
+    </div>
+  </div>
 
-      <!-- Icon -->
+  <!-- Upgrade Modal -->
+  <div id="upgradeModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4">
+    <div onclick="closeUpgradeModal()" class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm animate-fade-in"></div>
+    <div class="relative bg-slate-900 border border-white/10 rounded-2xl shadow-2xl shadow-purple-500/10 max-w-md w-full p-8 animate-scale-in">
+      <button onclick="closeUpgradeModal()"
+        class="absolute top-4 right-4 w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
       <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30 mb-5">
         <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       </div>
-
-      <!-- Badge -->
-      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-purple-500/15 text-purple-300 text-xs font-bold tracking-wider mb-3">
-        PRO
-      </div>
-
-      <!-- Heading -->
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-purple-500/15 text-purple-300 text-xs font-bold tracking-wider mb-3">PRO</div>
       <h2 class="text-2xl font-bold mb-2 tracking-tight">Upgrade to Practical Things Pro</h2>
       <p class="text-slate-400 mb-6 leading-relaxed">Get unlimited access to all tools for <span class="text-white font-semibold">€9/month</span>.</p>
-
-      <!-- Feature list -->
       <ul class="space-y-2 mb-7">
         <li class="flex items-center gap-3 text-sm text-slate-300">
-          <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
+          <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
           Unlimited access to every Pro app
         </li>
         <li class="flex items-center gap-3 text-sm text-slate-300">
-          <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
+          <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
           Cancel anytime, no questions asked
         </li>
         <li class="flex items-center gap-3 text-sm text-slate-300">
-          <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-          </svg>
+          <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
           Priority support included
         </li>
       </ul>
-
-      <!-- Actions -->
       <div class="flex flex-col-reverse sm:flex-row gap-3">
-        <button onclick="closeUpgradeModal()" class="flex-1 py-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-colors">
-          Close
-        </button>
-        <button class="flex-1 py-3 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-sm font-semibold transition-colors shadow-lg shadow-purple-500/30">
-          Continue to Checkout
-        </button>
+        <button onclick="closeUpgradeModal()" class="flex-1 py-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-semibold transition-colors">Close</button>
+        <button class="flex-1 py-3 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-sm font-semibold transition-colors shadow-lg shadow-purple-500/30">Continue to Checkout</button>
       </div>
     </div>
   </div>
 
-  <script>
-    const modal = document.getElementById('upgradeModal');
-
-    function openUpgradeModal() {
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeUpgradeModal() {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-        closeUpgradeModal();
-      }
-    });
-  </script>
+  <!-- Vite entry point -->
+  <script type="module" src="/src/main.js"></script>
 
 </body>
 </html>
